@@ -1,6 +1,0 @@
-const Article = () => {
-    return (
-    )
-};
-
-export {Article};
