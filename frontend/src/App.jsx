@@ -1,7 +1,7 @@
 //import { useState, userEffect } from "react"
 import "./App.css";
 import {Title} from "./components/Title";
-import {MainLayout} from "./layouts/MainLayout";
+//import {MainLayout} from "./layouts/MainLayout";
 import {HomePage} from "./pages/HomePage";
 import {LoginPage} from "./pages/LoginPage";
 import {
@@ -14,10 +14,10 @@ import {
 function App() {
     const router = createBrowserRouter(
     createRoutesFromElements(
-            <Route path="/" element={<MainLayout/>}>
-                <Route index element={<HomePage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-            </Route>
+            <>
+            <Route index element={<HomePage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+            </>
         ));
 
     return (<RouterProvider router={router}/>);
