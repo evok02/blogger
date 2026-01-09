@@ -1,10 +1,12 @@
 import {Posts} from "../components/Posts";
-import {Title} from "../components/Title";
+import {Navbar} from "../components/Navbar";
+import {Hero} from "../components/Hero";
 
 const HomePage = () => {
     return (
     <>
-        <Title/>
+        <Navbar/>
+        <Hero/>
         <Posts/>            
     </>
     );

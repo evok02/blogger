@@ -1,9 +1,10 @@
 //import { useState, userEffect } from "react"
 import "./App.css";
-import {Title} from "./components/Title";
+import {Navbar} from "./components/Navbar";
 //import {MainLayout} from "./layouts/MainLayout";
 import {HomePage} from "./pages/HomePage";
 import {LoginPage} from "./pages/LoginPage";
+import {TestPage} from "./pages/TestPage";
 import {
     Route,
     createRoutesFromElements,
@@ -15,8 +16,9 @@ function App() {
     const router = createBrowserRouter(
     createRoutesFromElements(
             <>
-            <Route index element={<HomePage/>}/>
-            <Route path="/login" element={<LoginPage/>}/>
+                <Route index element={<HomePage/>}/>
+                <Route path="/login" element={<LoginPage/>}/>
+                <Route path="/test" element={<TestPage/>}/>
             </>
         ));
 

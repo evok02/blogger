@@ -1,0 +1,30 @@
+package storage
+
+import (
+	"time"
+	"database/sql"
+)
+
+type Post struct {
+	ID          int64       `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
+	DeletedAt   time.Time `json:"-"`
+	IsDeleted   bool      `json:"-"`
+	Content     string    `json:"content"`
+}
+
+type NullablePost struct {
+	ID sql.NullInt64 `josn`
+
+}
+
+type User struct {
+	ID        int       `json:"id"`
+	Name      string    `json:"name"`
+	LastName  string    `json:"last_name"`
+	Email     string    `json:"email"`
+	IsAdmin   bool      `json:"is_admin"`
+	CreatedAt time.Time `json:"created_at"`
+}
