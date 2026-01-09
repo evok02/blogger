@@ -4,6 +4,7 @@ import (
 	//"context"
 	//"time"
 	"fmt"
+	"time"
 )
 
 func GetPosts(num int) ([]Post, error) {
@@ -50,6 +51,7 @@ func GetPosts(num int) ([]Post, error) {
 
 		res = append(res, nullPost.ToPost())
 	}
+	time.Sleep(time.Second * 3)
 
 	return res, nil
 }
