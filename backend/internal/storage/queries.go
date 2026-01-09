@@ -12,13 +12,13 @@ func GetPosts(num int) ([]Post, error) {
 		q = `
 		SELECT * FROM posts
 		WHERE is_deleted = false
-		ORDER BY created_at;
+		ORDER BY created_at DESC;
 		`
 	} else {
 		q = fmt.Sprintf(`
 		SELECT * FROM posts
 		WHERE is_deleted = false
-		ORDER BY created_at
+		ORDER BY created_at DESC
 		LIMIT %v;
 		`, num)
 

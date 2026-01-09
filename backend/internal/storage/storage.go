@@ -59,8 +59,6 @@ func runMigrations() error {
 	is_deleted NOT NULL DEFAULT false
 	);
 
-	DELETE FROM posts
-	WHERE id IN (0, 1);
 	`
 
 	_, err := DB.Exec(queryCreateUsers)

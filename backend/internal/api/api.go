@@ -3,6 +3,7 @@ package api
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"github.com/evok02/blogger/internal/storage"
 	"net/http"
 	"strconv"
@@ -53,6 +54,8 @@ func (c *apiConfig) HandleGetArticles(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		sendError(err, w)
 	}
+
+	fmt.Printf("fetched successfully from %s\n", r.RemoteAddr)
 }
 
 func (c *apiConfig) HandleCreatePost(w http.ResponseWriter, r *http.Request) {

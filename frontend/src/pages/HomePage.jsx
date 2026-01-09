@@ -7,7 +7,7 @@ const HomePage = () => {
     <>
         <Navbar/>
         <Hero/>
-        <Posts/>            
+        <Posts isHome={true}/>            
     </>
     );
 }

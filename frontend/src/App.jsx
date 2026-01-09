@@ -4,7 +4,7 @@ import {Navbar} from "./components/Navbar";
 //import {MainLayout} from "./layouts/MainLayout";
 import {HomePage} from "./pages/HomePage";
 import {LoginPage} from "./pages/LoginPage";
-import {TestPage} from "./pages/TestPage";
+import {TestFetch} from "./pages/TestPage";
 import {
     Route,
     createRoutesFromElements,
@@ -18,7 +18,7 @@ function App() {
             <>
                 <Route index element={<HomePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/test" element={<TestPage/>}/>
+                <Route path="/test" element={<TestFetch/>}/>
             </>
         ));
 
