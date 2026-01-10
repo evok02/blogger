@@ -39,14 +39,16 @@ func Init() (*sql.DB, error) {
 
 func runMigrations() error {
 	queryCreateUsers := `
-	CREATE TABLE IF NOT EXISTS users (
+	CREATE TABLE IF NOT EXISTS users_v (
 	id INTEGER PRIMARY KEY,
 	name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
-	email TEXT NOT NULL,
+	password TEXT NOT NULL,
+	email TEXT NOT NULL UNIQUE,
 	is_admin NOT NULL DEFAULT false,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 	);
+
 	`
 
 	queryCreatePosts := `
@@ -54,10 +56,11 @@ func runMigrations() error {
 	id INTEGER PRIMARY KEY,
 	title TEXT NOT NULL DEFAULT "Test Article",
 	description TEXT NOT NULL,
-	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	created_at DATEE DEFAULT CURRENT_DATE,
 	deleted_at DATETIME,
 	is_deleted NOT NULL DEFAULT false
 	);
+
 
 	`
 

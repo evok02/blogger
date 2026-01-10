@@ -1,0 +1,62 @@
+import {useState, useEffect} from "react";
+import {Link, useNavigate} from "react-router-dom";
+
+const LoginForm = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [isIn, setIsIn] = useState("")
+    const navigate = useNavigate();
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const claims = {
+            email,
+            password
+        };
+
+        console.log(claims);
+
+        return navigate("/");
+    }
+
+    return (
+        <div className="bg-zinc-900  flex  h-screen justify-center ">
+            <div className="bg-zinc-800 p-15 absolute max-h-xl mt-20">
+                <form onSubmit={onSubmit} className="mt-4 min-w-xl">
+                    <div className="grid grid-cols-1 gap-7">
+                    <h1 className="text-5xl font-semibold text-white text-center">Login</h1>
+                    <div className="mx-10 ">
+                        <input 
+                            type="text"
+                            id="email"
+                            name="email"
+                            className="border border-gray-300 text-gray-300 w-full py-2 px-3 mb-2 mt-2"
+                            placeholder="Enter you email here: "
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="mx-10 ">
+                        <input 
+                            type="password"
+                            id="password"
+                            name="password"
+                            className="border border-gray-300 text-gray-300 w-full py-2 px-3 mb-2 mt-2"
+                            placeholder="Enter you password here: "
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    </div>
+                    <div className="flex flex-row-reverse"> 
+                    <button type="submit" className="text-blue-500 font-semibold text-xl mt-7 mr-10 hover:text-blue-800 transition-colors duration-200 ">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
+export {LoginForm};

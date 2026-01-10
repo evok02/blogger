@@ -1,30 +1,24 @@
-package storage
+import {Link} from "react-router-dom";
 
-import (
-	"time"
-	"database/sql"
-)
-
-type Post struct {
-	ID          int64       `json:"id"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	CreatedAt   time.Time `json:"created_at"`
-	DeletedAt   time.Time `json:"-"`
-	IsDeleted   bool      `json:"-"`
-	Content     string    `json:"content"`
+const Post = ({post}) => {
+    return (
+    <div className="bg-zinc-800 p-5 relative">
+        <div className="flex justify-between ">
+            <Link 
+                to="/" 
+                className="text-2xl article-link inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 group"
+            >
+                    <span className="absolute inset-0"></span>
+                 {post.title}
+                <i className="arrow-icon fas fa-arrow-right ml-2 transition-transform duration-200 group-hover:translate-x-1"></i>
+            </Link>
+                <p className="text-zinc-200">{post.created_at}</p>
+        </div>
+        <p className="text-zinc-300 leading-relaxed">
+                {post.description}
+        </p>
+    </div>
+    );
 }
 
-type NullablePost struct {
-	ID sql.NullInt64 `josn`
-
-}
-
-type User struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name"`
-	LastName  string    `json:"last_name"`
-	Email     string    `json:"email"`
-	IsAdmin   bool      `json:"is_admin"`
-	CreatedAt time.Time `json:"created_at"`
-}
+export {Post};

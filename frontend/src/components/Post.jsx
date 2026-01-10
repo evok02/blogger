@@ -2,8 +2,8 @@ import {Link} from "react-router-dom";
 
 const Post = ({post}) => {
     return (
-    <div className="bg-white p-5 rounded hover:bg-slate-200 relative">
-        <div className="flex justify-between ">
+    <div className="bg-zinc-800 p-5 relative hover:bg-zinc-800/80">
+        <div className="flex ">
             <Link 
                 to="/" 
                 className="text-2xl article-link inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 group"
@@ -12,9 +12,9 @@ const Post = ({post}) => {
                  {post.title}
                 <i className="arrow-icon fas fa-arrow-right ml-2 transition-transform duration-200 group-hover:translate-x-1"></i>
             </Link>
-                <p>{post.created_at}</p>
+                <p className="text-zinc-200 pt-1.5 ml-2">{post.created_at}</p>
         </div>
-        <p className="text-gray-600 leading-relaxed">
+        <p className="text-zinc-300 leading-relaxed mt-4">
                 {post.description}
         </p>
     </div>

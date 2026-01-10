@@ -71,3 +71,35 @@ func (c *apiConfig) HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 		sendError(err, w)
 	}
 }
+
+func (c *apiConfig) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
+	var u storage.User
+	err := json.NewDecoder(r.Body).Decode(&u)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+
+	err = storage.CreateUser(u)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+}
+
+func (c *apiConfig) HandleGetUser(w http.ResponseWriter, r *http.Request) {
+	params := r.URL.Query()
+	mail := params.Get("email")
+
+	if mail == "" {
+		w.Write([]byte("invalid format~"))
+	}
+
+	user, err := storage.GetUserByEmail(mail)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+
+	err = json.NewEncoder(w).Encode(user)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+}

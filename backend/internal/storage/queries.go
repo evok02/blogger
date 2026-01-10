@@ -1,9 +1,10 @@
 package storage
 
 import (
-	//"context"
-	//"time"
+	"context"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
+	"os"
 	"time"
 )
 
@@ -51,7 +52,6 @@ func GetPosts(num int) ([]Post, error) {
 
 		res = append(res, nullPost.ToPost())
 	}
-	time.Sleep(time.Second * 3)
 
 	return res, nil
 }
@@ -76,7 +76,74 @@ func CreatePost(p Post) error {
 		return fmt.Errorf("raw was not created")
 	}
 
-	fmt.Printf("Post was create successfuly: %s", p.Title)
+	fmt.Printf("post was create successfuly: %s", p.Title)
 
 	return nil
+}
+
+func CreateUser(u User) error {
+	start := time.Now()
+	password := []byte(u.Password + os.Getenv("SALT"))
+
+	//ctx, cancel := context.WithTimeout(context.Background(), 3 * time.Second)
+	encryptedPassword, err := bcrypt.GenerateFromPassword(password, 14)
+	if err != nil {
+		return fmt.Errorf("Create user: %w", err)
+	}
+
+	stringPassword := string(encryptedPassword)
+	fmt.Println(stringPassword)
+
+	q := `
+	INSERT INTO users_v (name, last_name, email, password)
+	VALUES (?, ?, ?, ?)
+	`
+
+	res, err := DB.ExecContext(context.TODO(), q,
+		u.Name,
+		u.LastName,
+		u.Email,
+		u.Password)
+
+	if err != nil {
+		return fmt.Errorf("createUser: %w", err)
+	}
+
+	n, err := res.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("createUser: %w", err)
+	}
+
+	if n == 0 {
+		return fmt.Errorf("couldnt create the user entry")
+	}
+
+	fmt.Println(time.Since(start))
+	return nil
+}
+
+func GetUserByEmail(email string) (User, error) {
+	q := `
+	SELECT * FROM users_v
+	WHERE email = (?)
+	`
+	var u NullableUser
+
+	row := DB.QueryRowContext(context.TODO(), q, email)
+
+	err := row.Scan(
+		&u.ID,
+		&u.Name,
+		&u.LastName,
+		&u.Password,
+		&u.Email,
+		&u.IsAdmin,
+		&u.CreatedAt,
+	)
+
+	if err != nil {
+		return User{}, fmt.Errorf("getUserByEmail: %w", err)
+	}
+
+	return u.ToUser(), nil
 }

@@ -4,11 +4,10 @@ import {Hero} from "../components/Hero";
 
 const HomePage = () => {
     return (
-    <>
-        <Navbar/>
+    <div className="bg-zinc-900 h-screen">
         <Hero/>
         <Posts isHome={true}/>            
-    </>
+    </div>
     );
 }
 

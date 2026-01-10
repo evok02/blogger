@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"github.com/evok02/blogger/internal/api"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 )
 
 func main() {
+	godotenv.Load()
 	c, err := api.NewApiConfig()
 	if err != nil {
 		log.Fatal(err)
@@ -21,6 +23,8 @@ func main() {
 	r.HandleFunc("/", c.HomeHandler).Methods("POST")
 	r.HandleFunc("/posts", c.HandleGetArticles).Methods("GET")
 	r.HandleFunc("/post", c.HandleCreatePost).Methods("POST")
+	r.HandleFunc("/user", c.HandleCreateUser).Methods("POST")
+	r.HandleFunc("/user", c.HandleGetUser).Methods("GET")
 
 	fmt.Printf("Listen on port %s...\n", c.Server.Addr)
 	err = c.Server.ListenAndServe()
