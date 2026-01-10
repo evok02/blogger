@@ -4,7 +4,7 @@ const Navbar = () => {
     return (
         <div className="bg-zinc-900 px-10 py-6 flex justify-between">
            <p className="font-sans text-blue-500  text-3xl font-extrabold">
-                <a href="/">MyPersonalBlog</a>
+                <Link to="/">MyPersonalBlog</Link>
             </p> 
             <div>
                <nav className="flex gap-4">

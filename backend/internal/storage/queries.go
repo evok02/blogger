@@ -12,13 +12,23 @@ func GetPosts(num int) ([]Post, error) {
 	var q string
 	if num == 0 {
 		q = `
-		SELECT * FROM posts
+		SELECT id, 
+		title, 
+		description, 
+		created_at, 
+		content 
+		FROM posts
 		WHERE is_deleted = false
 		ORDER BY created_at DESC;
 		`
 	} else {
 		q = fmt.Sprintf(`
-		SELECT * FROM posts
+		SELECT id, 
+		title, 
+		description, 
+		created_at, 
+		content 
+		FROM posts
 		WHERE is_deleted = false
 		ORDER BY created_at DESC
 		LIMIT %v;
@@ -41,8 +51,6 @@ func GetPosts(num int) ([]Post, error) {
 			&nullPost.Title,
 			&nullPost.Description,
 			&nullPost.CreatedAt,
-			&nullPost.DeletedAt,
-			&nullPost.IsDeleted,
 			&nullPost.Content,
 		)
 

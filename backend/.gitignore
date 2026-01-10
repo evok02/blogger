@@ -1,2 +1,2 @@
 bin/
-internal/storage/data/
+*.db
