@@ -1,8 +1,14 @@
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import {Navbar} from "../components/Navbar";
+import {useEffect} from "react";
 
-const MainLayout = ({loggedIn, setIsIn}) => {
-    console.log(typeof(setIsIn))
+const MainLayout = ({loggedIn}) => {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     return (
         <>
             <Navbar loggedIn={loggedIn}/>
