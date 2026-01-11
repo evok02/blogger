@@ -30,7 +30,7 @@ const Posts = ({isHome}) => {
                 <div className="grid grid-cols-1 gap-4 sm:px-15 lg:px-65">
                 {loading ? <Spinner loading={loading}/> : <>
                     {posts.map((post) => (
-                        <Post key={post.id} post={post}/>
+                        <Post key={post.id} post={post} isPreview={true}/>
                     ))}
                     </>}
                 </div>

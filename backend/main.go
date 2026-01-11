@@ -23,6 +23,7 @@ func main() {
 	r.HandleFunc("/", c.HomeHandler).Methods("POST")
 	r.HandleFunc("/posts", c.HandleGetArticles).Methods("GET")
 	r.HandleFunc("/post", c.HandleCreatePost).Methods("POST")
+	r.HandleFunc("/post", c.HandleGetPostById).Methods("GET")
 	r.HandleFunc("/user", c.HandleCreateUser).Methods("POST")
 	r.HandleFunc("/user", c.HandleGetUser).Methods("GET")
 	r.HandleFunc("/users", c.HandleGetUsers).Methods("GET")

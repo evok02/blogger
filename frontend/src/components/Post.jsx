@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-const Post = ({post}) => {
+const Post = ({post, isPreview}) => {
     const formatDate = (stringDate) => {
         const date = new Date(stringDate)
         let day = date.getUTCDate();
@@ -13,10 +13,10 @@ const Post = ({post}) => {
     }
 
     return (
-    <div className="bg-zinc-800 p-5 relative hover:bg-zinc-800/80">
-        <div className="flex ">
+    <div className="bg-zinc-800 p-5 relative hover:bg-zinc-800/80 z-20">
+        <div className="flex justify-between">
             <Link 
-                to="/" 
+                    to = {`/articles/${post.id}`}
                 className="text-2xl article-link inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 group"
             >
                     <span className="absolute inset-0"></span>
@@ -26,8 +26,8 @@ const Post = ({post}) => {
                 <p className="text-zinc-200 pt-1.5 ml-2">{formatDate(post.created_at)}</p>
                 
         </div>
-        <p className="text-zinc-400 leading-relaxed mt-4">
-                {post.description}
+        <p className="text-zinc-400 leading-relaxed text-xl mt-4">
+                {isPreview ? post.description : post.content}
         </p>
     </div>
     );

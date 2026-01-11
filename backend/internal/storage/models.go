@@ -5,9 +5,7 @@ import (
 	"time"
 )
 
-type ErrorResponse struct {
-	Error string `json:"error"`
-}
+type Role string
 
 type Post struct {
 	ID          int64     `json:"id"`

@@ -6,6 +6,7 @@ import {HomePage} from "./pages/HomePage";
 import {LoginPage} from "./pages/LoginPage";
 import {TestFetch} from "./pages/TestPage";
 import {ArticlesPage} from "./pages/ArticlesPage";
+import {ArticlePage} from "./pages/ArticlePage";
 import {
     Route,
     createRoutesFromElements,
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/login"  element={<LoginPage setIsIn={setIsIn}/>}/>
                 <Route path="/test" element={<TestFetch/>}/>
                 <Route path="/articles" isIn={isIn} element={<ArticlesPage/>}/>
+                <Route path="/articles/:id" element={<ArticlePage/>}/>
             </Route>
         ));
 

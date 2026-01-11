@@ -186,3 +186,41 @@ func GetUsers() ([]User, error) {
 
 	return res, nil
 }
+
+func ValidateUser(pwd string, email string) (bool, error) {
+	u, err := GetUserByEmail(email)
+	if err != nil {
+		return false, fmt.Errorf("validateUser: %w", err)
+	}
+
+	encryptedPwd := []byte(u.Password)
+	err = bcrypt.CompareHashAndPassword(encryptedPwd, []byte(pwd+os.Getenv("SALT")))
+	if err != nil {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+func GetArticleById(id int) (Post, error) {
+	q := `
+	SELECT id, title, description, content, created_at FROM posts
+	WHERE id = (?) AND is_deleted = false;
+	`
+
+	row := DB.QueryRowContext(context.TODO(), q, id)
+	var nullPost NullablePost
+	err := row.Scan(
+		&nullPost.ID,
+		&nullPost.Title,
+		&nullPost.Description,
+		&nullPost.Content,
+		&nullPost.CreatedAt,
+	)
+
+	if err != nil {
+		return Post{}, fmt.Errorf("getArticleById: %w", err)
+	}
+
+	return nullPost.ToPost(), nil
+}

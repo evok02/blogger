@@ -7,7 +7,6 @@ import (
 	"github.com/evok02/blogger/internal/storage"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 type apiConfig struct {
@@ -55,6 +54,28 @@ func NewApiConfig() (*apiConfig, error) {
 
 func (c *apiConfig) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Working fine: HP 100%"))
+}
+
+func (c *apiConfig) HandleGetPostById(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("api point hit...")
+	id := r.URL.Query().Get("id")
+	intId, err := strconv.Atoi(id)
+	if err != nil {
+		writeError(err, w)
+		return
+	}
+	post, err := storage.GetArticleById(intId)
+	if err != nil {
+		writeError(err, w)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(post)
+	if err != nil {
+		writeError(err, w)
+		return
+	}
 }
 
 func (c *apiConfig) HandleGetArticles(w http.ResponseWriter, r *http.Request) {
@@ -142,19 +163,19 @@ func (c *apiConfig) HandleValidateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u, err := storage.GetUserByEmail(body.Email)
+	isValid, err := storage.ValidateUser(body.Password, body.Email)
 	if err != nil {
 		res.Error = err.Error()
-		err = json.NewEncoder(w).Encode(res)
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
 		return
 	}
 
-	if u.Password == body.Password {
+	if isValid {
 		res.IsValid = true
-		res.IsAdmin = u.IsAdmin
+	} else {
+		res.Error = "invalid password"
 	}
 
-	time.Sleep(time.Second)
-	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(res)
 }
