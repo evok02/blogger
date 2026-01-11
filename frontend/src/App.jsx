@@ -12,16 +12,17 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom"
+import {useState} from "react";
 
 function App() {
-    
+    let [isIn, setIsIn] = useState(false)
     const router = createBrowserRouter(
     createRoutesFromElements(
-            <Route path="/" element={<MainLayout/>}>
-                <Route index element={<HomePage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/" element={<MainLayout loggedIn={isIn} setIsIn={setIsIn}/>}>
+                <Route index isIn={isIn} element={<HomePage/>}/>
+                <Route path="/login"  element={<LoginPage setIsIn={setIsIn}/>}/>
                 <Route path="/test" element={<TestFetch/>}/>
-                <Route path="/articles" element={<ArticlesPage/>}/>
+                <Route path="/articles" isIn={isIn} element={<ArticlesPage/>}/>
             </Route>
         ));
 

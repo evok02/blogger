@@ -1,23 +1,37 @@
 import {useState, useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({setIsIn}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isIn, setIsIn] = useState("")
     const navigate = useNavigate();
 
     const onSubmit = (e) => {
-        e.preventDefault();
-        const claims = {
-            email,
-            password
-        };
+        const validate = async () => {
+            e.preventDefault();
+            const claims = {
+                email,
+                password
+            };
 
-        console.log(claims);
+            let res = await fetch("/api/validate?email="+claims.email, {
+                body: JSON.stringify(claims),
+                method: "POST",
+                header: "Content-Type: application/json"
 
-        return navigate("/");
+            });
+            
+            let data = await res.json();
+
+
+            if (data.is_valid) {
+                setIsIn(true);
+                navigate("/");
+            }
+        }
+        validate();
     }
+
 
     return (
         <div className="bg-zinc-900  flex  h-screen justify-center ">

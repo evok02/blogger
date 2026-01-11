@@ -3,11 +3,10 @@ import {Link} from "react-router-dom";
 const Post = ({post}) => {
     const formatDate = (stringDate) => {
         const date = new Date(stringDate)
+        let day = date.getUTCDate();
         const months = ["January","February","March","April",
             "May","June","July","August","September","October",
             "November","December"];
-        let day = date.getDay();
-        console.log(date.getMonth())
         let month = months[date.getMonth()];
         let year = date.getFullYear();
         return day + " " + month + " " + year;

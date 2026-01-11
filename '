@@ -21,22 +21,15 @@ type ErrorResponse struct {
 
 type ValidationBody struct {
 	IsValid bool `json:"is_valid"`
-	IsAdmin bool `json:"is_admin"`
-	ErrorResponse
-}
-
-type LoginForm struct {
-	Email    string
-	Password string
 }
 
 func writeError(err error, w http.ResponseWriter) {
-	e := ErrorResponse{
+	er := ErrorResponse{
 		Error: err.Error(),
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(500)
-	err = json.NewEncoder(w).Encode(e)
+	json.NewEncoder(w).Encode(er)
 }
 
 func NewApiConfig() (*apiConfig, error) {
@@ -134,26 +127,20 @@ func (c *apiConfig) HandleGetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *apiConfig) HandleValidateUser(w http.ResponseWriter, r *http.Request) {
-	var body LoginForm
-	var res ValidationBody
+	var body struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
 		writeError(err, w)
-		return
 	}
 
-	u, err := storage.GetUserByEmail(body.Email)
-	if err != nil {
-		res.Error = err.Error()
-		err = json.NewEncoder(w).Encode(res)
-		return
-	}
-
-	if u.Password == body.Password {
-		res.IsValid = true
-		res.IsAdmin = u.IsAdmin
-	}
-
+	fmt.Printf("body:\n %+v\n", body)
+	res := struct {
+		IsValid bool `json:"is_valid"`
+	}{IsValid: true}
+	
 	time.Sleep(time.Second)
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(res)

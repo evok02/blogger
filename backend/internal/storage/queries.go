@@ -100,7 +100,6 @@ func CreateUser(u User) error {
 	}
 
 	stringPassword := string(encryptedPassword)
-	fmt.Println(stringPassword)
 
 	q := `
 	INSERT INTO users_v (name, last_name, email, password)
@@ -111,7 +110,7 @@ func CreateUser(u User) error {
 		u.Name,
 		u.LastName,
 		u.Email,
-		u.Password)
+		stringPassword)
 
 	if err != nil {
 		return fmt.Errorf("createUser: %w", err)
@@ -154,4 +153,36 @@ func GetUserByEmail(email string) (User, error) {
 	}
 
 	return u.ToUser(), nil
+}
+
+func GetUsers() ([]User, error) {
+	var res []User
+	q := `
+	SELECT * FROM users_v;
+	`
+
+	rows, err := DB.QueryContext(context.TODO(), q)
+	if err != nil {
+		return nil, fmt.Errorf("getUsers: %w", err)
+	}
+
+	var u NullableUser
+	for rows.Next() {
+		err := rows.Scan(
+			&u.ID,
+			&u.Name,
+			&u.LastName,
+			&u.Password,
+			&u.Email,
+			&u.IsAdmin,
+			&u.CreatedAt,
+		)
+		if err != nil {
+			return nil,
+				fmt.Errorf("couldnt fetch the user with id:%v, err: %w", u.ID, err)
+		}
+		res = append(res, u.ToUser())
+	}
+
+	return res, nil
 }

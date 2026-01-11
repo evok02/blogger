@@ -1,11 +1,12 @@
 import {Outlet} from "react-router-dom";
 import {Navbar} from "../components/Navbar";
 
-const MainLayout = () => {
+const MainLayout = ({loggedIn, setIsIn}) => {
+    console.log(typeof(setIsIn))
     return (
         <>
-            <Navbar/>
-            <Outlet/>
+            <Navbar loggedIn={loggedIn}/>
+            <Outlet />
         </>
     );
 }

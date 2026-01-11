@@ -56,12 +56,11 @@ func runMigrations() error {
 	id INTEGER PRIMARY KEY,
 	title TEXT NOT NULL DEFAULT "Test Article",
 	description TEXT NOT NULL,
-	created_at DATEE DEFAULT CURRENT_DATE,
+	created_at DATE DEFAULT CURRENT_DATE,
+	content TEXT NOT NULL DEFAULT "",
 	deleted_at DATETIME,
 	is_deleted NOT NULL DEFAULT false
 	);
-
-
 	`
 
 	_, err := DB.Exec(queryCreateUsers)
