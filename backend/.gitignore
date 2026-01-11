@@ -1,2 +1,2 @@
 bin/
-/backend/internal/data/*.db
+**/data/*.db
