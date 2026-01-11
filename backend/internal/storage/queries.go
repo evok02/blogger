@@ -22,7 +22,7 @@ func GetPosts(num int) ([]Post, error) {
 		ORDER BY created_at DESC;
 		`
 	} else {
-		q = fmt.Sprintf(`
+		q = `
 		SELECT id, 
 		title, 
 		description, 
@@ -31,15 +31,15 @@ func GetPosts(num int) ([]Post, error) {
 		FROM posts
 		WHERE is_deleted = false
 		ORDER BY created_at DESC
-		LIMIT %v;
-		`, num)
+		LIMIT ?;
+		`
 
 	}
 
 	var res []Post
 	//ctx, _ := context.WithTimeout(context.Background(),
 	//		time.Second * 5)
-	rows, err := DB.Query(q)
+	rows, err := DB.Query(q, num)
 	if err != nil {
 		return nil, fmt.Errorf("getPosts: %w", err)
 	}
