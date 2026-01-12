@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 const LoginForm = ({setIsIn}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
     const navigate = useNavigate();
 
     const onSubmit = (e) => {
@@ -27,6 +28,9 @@ const LoginForm = ({setIsIn}) => {
             if (data.is_valid) {
                 setIsIn(true);
                 navigate("/");
+            } else {
+            data.error === "validateUser: getUserByEmail: sql: no rows in result set" ? setError("invalid email") :
+                setError(data.error)
             }
         }
         validate();
@@ -64,8 +68,13 @@ const LoginForm = ({setIsIn}) => {
                         />
                     </div>
                     </div>
-                    <div className="flex flex-row-reverse"> 
-                    <button type="submit" className="text-blue-500 font-semibold text-xl mt-7 mr-10 hover:text-blue-800 transition-colors duration-200 ">Submit</button>
+                    <div className="flex justify-between mt-7 mr-5 h"> 
+                        <div className="justify-left">
+                            <p className="text-red-500 mx-10">{error}</p>    
+                        </div>
+                        <div>
+                            <button type="submit" className="text-blue-500 font-semibold text-xl over:text-blue-800 transition-colors duration-200 ">Submit</button>
+                        </div>
                     </div>
                 </form>
             </div>
