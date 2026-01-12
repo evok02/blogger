@@ -1,7 +1,6 @@
 import {Post} from "../components/Post";
 import {useState, useEffect} from "react";
 import {Spinner} from "../components/Spinner";
-
 const ArticlePage = () => {
     let [loading, setLoading] = useState(true);
     let [post, setPost] = useState({});

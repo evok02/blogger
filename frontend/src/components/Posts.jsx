@@ -1,6 +1,7 @@
 import {Post} from "./Post";
 import {useEffect, useState} from "react";
 import {Spinner} from "./Spinner";
+import {Footer} from "../components/Footer";
 
 const Posts = ({isHome}) => {
     let [posts, setPosts] = useState([]);
@@ -25,8 +26,9 @@ const Posts = ({isHome}) => {
     }, []);
 
     return (
+        <>
         <section className="bg-zinc-900">
-            <div className="mx-auto  max-w:lg container ">
+            <div className="mx-auto  pb-20 max-w:lg container ">
                 <div className="grid grid-cols-1 gap-4 sm:px-15 lg:px-65">
                 {loading ? <Spinner loading={loading}/> : <>
                     {posts.map((post) => (
@@ -36,6 +38,8 @@ const Posts = ({isHome}) => {
                 </div>
             </div>
         </section>
+        <Footer/>
+        </>
     )
 };
 
