@@ -224,3 +224,40 @@ func GetArticleById(id int) (Post, error) {
 
 	return nullPost.ToPost(), nil
 }
+
+func EditArticle(a Post) (Post, error) {
+	q1 := `
+	UPDATE posts
+	SET title = (?),
+		description = (?),
+		content = (?)
+	WHERE id = (?);
+	`
+	q2 := `SELECT id, title, description, content 
+	FROM posts
+	WHERE id = (?);`
+
+	_, err := DB.ExecContext(context.TODO(), q1, a.Title, a.Description, a.Content, a.ID)
+	if err != nil {
+		return Post{}, fmt.Errorf("EditArticle: %w", err)
+	}
+
+	row := DB.QueryRowContext(context.TODO(), q2, a.ID)
+
+	var nullPost NullablePost
+
+	err = row.Scan(
+		&nullPost.ID,
+		&nullPost.Title,
+		&nullPost.Description,
+		&nullPost.Content,
+	)
+
+	if err != nil {
+		return Post{}, fmt.Errorf("EditArticle: %w", err)
+	}
+
+	post := nullPost.ToPost()
+
+	return post, nil
+}

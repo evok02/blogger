@@ -189,3 +189,18 @@ func (c *apiConfig) HandleValidateUser(w http.ResponseWriter, r *http.Request) {
 
 	err = json.NewEncoder(w).Encode(res)
 }
+
+func (c *apiConfig) HandleEditArticle(w http.ResponseWriter, r *http.Request) {
+	var p storage.Post
+	err := json.NewDecoder(r.Body).Decode(&p)
+	if err != nil {
+		writeError(err, w)
+	}
+
+	updatedPost, err := storage.EditArticle(p)
+	if err != nil {
+		writeError(err, w)
+	}
+
+	json.NewEncoder(w).Encode(updatedPost)
+}
