@@ -8,7 +8,6 @@ const HomePage = () => {
     <div className="bg-zinc-900 h-screen">
         <Hero/>
         <Posts isHome={true}/>            
-        <Footer/>
     </div>
     );
 }
