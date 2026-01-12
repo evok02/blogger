@@ -18,6 +18,11 @@ type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
+type RegistrationResponse struct {
+	Success bool `json:"success"`
+	ErrorResponse
+}
+
 type ValidationBody struct {
 	IsValid bool `json:"is_valid"`
 	IsAdmin bool `json:"is_admin"`
@@ -115,14 +120,19 @@ func (c *apiConfig) HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 func (c *apiConfig) HandleCreateUser(w http.ResponseWriter, r *http.Request) {
 	var u storage.User
+	var res RegistrationResponse
 	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		res.Error = err.Error()
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
 	}
 
 	err = storage.CreateUser(u)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		res.Error = err.Error()
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
 	}
 }
 

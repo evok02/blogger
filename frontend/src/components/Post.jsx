@@ -13,8 +13,9 @@ const Post = ({post, isPreview}) => {
     }
 
     return (
-    <div className="bg-zinc-800 p-5 relative hover:bg-zinc-800/80 z-20">
+    <div className={isPreview ? "bg-zinc-800 p-5 relative hover:bg-zinc-800/80 z-20" : "bg-zinc-900 p-5 relative z-20"}>
         <div className="flex justify-between">
+                
             <Link 
                     to = {`/articles/${post.id}`}
                 className="text-2xl article-link inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 group"
