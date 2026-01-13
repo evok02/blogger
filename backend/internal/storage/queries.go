@@ -102,15 +102,16 @@ func CreateUser(u User) error {
 	stringPassword := string(encryptedPassword)
 
 	q := `
-	INSERT INTO users_v (name, last_name, email, password)
-	VALUES (?, ?, ?, ?)
+	INSERT INTO users_x (name, last_name, email, password, is_admin)
+	VALUES (?, ?, ?, ?, ?)
 	`
 
 	res, err := DB.ExecContext(context.TODO(), q,
 		u.Name,
 		u.LastName,
 		u.Email,
-		stringPassword)
+		stringPassword,
+		u.IsAdmin)
 
 	if err != nil {
 		return fmt.Errorf("createUser: %w", err)
@@ -131,7 +132,7 @@ func CreateUser(u User) error {
 
 func GetUserByEmail(email string) (User, error) {
 	q := `
-	SELECT * FROM users_v
+	SELECT * FROM users_x
 	WHERE email = (?)
 	`
 	var u NullableUser
@@ -158,7 +159,7 @@ func GetUserByEmail(email string) (User, error) {
 func GetUsers() ([]User, error) {
 	var res []User
 	q := `
-	SELECT * FROM users_v;
+	SELECT * FROM users_x;
 	`
 
 	rows, err := DB.QueryContext(context.TODO(), q)
@@ -272,6 +273,21 @@ func DeleteArticle(id int) error {
 	_, err := DB.Exec(q, id)
 	if err != nil {
 		return fmt.Errorf("DeleteArticle: %w", err)
+	}
+
+	return nil
+}
+
+func CreateAdmin(id int) error {
+	q := `
+	INSERT INTO users_x (is_admin)
+	VALUES (1)
+	WHERE id = (?)
+	`
+
+	_, err := DB.Exec(q, id)
+	if err != nil {
+		return err
 	}
 
 	return nil

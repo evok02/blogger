@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import UpdateArticleForm from "../components/UpdateArticleForm"
 
-const Post = ({post, isPreview}) => {
+const Post = ({post, isPreview, isAdmin}) => {
     const formatDate = (stringDate) => {
         const date = new Date(stringDate)
         let day = date.getUTCDate();

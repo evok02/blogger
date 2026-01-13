@@ -8,7 +8,6 @@ import {TestFetch} from "./pages/TestPage";
 import {ArticlesPage} from "./pages/ArticlesPage";
 import {ArticlePage} from "./pages/ArticlePage";
 import {InvalidPage} from "./pages/InvalidPage";
-import UpdateArticlePage from "./pages/UpdateArticlePage";
 import {
     Route,
     createRoutesFromElements,
@@ -18,18 +17,18 @@ import {
 import {useState} from "react";
 
 function App() {
-    let [isIn, setIsIn] = useState(false)
+    const [isIn, setIsIn] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
 
     const router = createBrowserRouter(
     createRoutesFromElements(
-            <Route path="/" element={<MainLayout loggedIn={isIn} setIsIn={setIsIn}/>}>
+            <Route path="/" element={<MainLayout loggedIn={isIn} setIsIn={setIsIn} />}>
                 <Route index isIn={isIn} element={<HomePage/>}/>
-                <Route path="/login"  element={<LoginPage setIsIn={setIsIn}/>}/>
+                <Route path="/login"  element={<LoginPage setIsIn={setIsIn} setIsAdmin={setIsAdmin}/>}/>
                 <Route path="/test" element={<TestFetch/>}/>
                 <Route path="/articles" isIn={isIn} element={<ArticlesPage/>}/>
-                <Route path="/articles/:id" element={<ArticlePage/>}/>
+                <Route path="/articles/:id" element={<ArticlePage isAdmin={isAdmin} />}/>
                 <Route path="*" element={<InvalidPage/>}/>
-                <Route path="/edit/:id" element={<UpdateArticlePage/>}/>
             </Route>
         ));
 

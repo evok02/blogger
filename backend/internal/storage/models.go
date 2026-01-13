@@ -72,6 +72,8 @@ func (nu *NullableUser) ToUser() User {
 
 	if !nu.IsAdmin.Valid {
 		user.IsAdmin = false
+	} else {
+		user.IsAdmin = nu.IsAdmin.Bool
 	}
 
 	if !nu.CreatedAt.Valid {

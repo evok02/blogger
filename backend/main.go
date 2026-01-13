@@ -30,6 +30,7 @@ func main() {
 	r.HandleFunc("/validate", c.HandleValidateUser).Methods("POST")
 	r.HandleFunc("/post/update", c.HandleEditArticle).Methods("PUT")
 	r.HandleFunc("/post/delete", c.HandleDeleteArticle).Methods("DELETE")
+	r.HandleFunc("/admin/create", c.HandleCreateAdmin).Methods("POST")
 
 	fmt.Printf("Listen on port %s...\n", c.Server.Addr)
 	err = c.Server.ListenAndServe()

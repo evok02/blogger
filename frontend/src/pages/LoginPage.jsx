@@ -1,11 +1,10 @@
 import {Link} from "react-router-dom";
 import {LoginForm} from "../components/LoginForm";
-const LoginPage = ({setIsIn}) => {
-    console.log(typeof(setIsIn))
+const LoginPage = ({setIsIn, setIsAdmin}) => {
 
     return (
         <div>
-            <LoginForm setIsIn={setIsIn}/>
+            <LoginForm setIsIn={setIsIn} setIsAdmin={setIsAdmin}/>
         </div>
     );
 

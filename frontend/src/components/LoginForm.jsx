@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-const LoginForm = ({setIsIn}) => {
+const LoginForm = ({setIsIn, setIsAdmin}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -22,7 +22,6 @@ const LoginForm = ({setIsIn}) => {
                 body: JSON.stringify(claims),
                 method: "POST",
                 header: "Content-Type: application/json"
-
             });
             
             let data = await res.json();
@@ -30,6 +29,7 @@ const LoginForm = ({setIsIn}) => {
 
             if (data.is_valid) {
                 setIsIn(true);
+                data.is_admin && setIsAdmin(true);
                 navigate("/");
             } else {
             data.error === "validateUser: getUserByEmail: sql: no rows in result set" ? setError("invalid email") :

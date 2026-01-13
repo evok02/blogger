@@ -182,10 +182,17 @@ func (c *apiConfig) HandleValidateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if isValid {
+		u, err := storage.GetUserByEmail(body.Email)
+		if err != nil {
+			writeError(err, w)
+		}
 		res.IsValid = true
+		res.IsAdmin = u.IsAdmin
 	} else {
 		res.Error = "invalid password"
 	}
+
+	fmt.Printf("%+v\n", res)
 
 	err = json.NewEncoder(w).Encode(res)
 }
@@ -214,4 +221,18 @@ func (c *apiConfig) HandleDeleteArticle(w http.ResponseWriter, r *http.Request) 
 	}
 
 	err = storage.DeleteArticle(intId)
+}
+
+func (c *apiConfig) HandleCreateAdmin(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+
+	intId, err := strconv.Atoi(id)
+	if err != nil {
+		fmt.Println("invalid id format")
+	}
+
+	err = storage.CreateAdmin(intId)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }
