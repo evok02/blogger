@@ -235,7 +235,7 @@ func EditArticle(a Post) (Post, error) {
 	`
 	q2 := `SELECT id, title, description, content 
 	FROM posts
-	WHERE id = (?);`
+	WHERE id = (?) AND is_deleted = false;`
 
 	_, err := DB.ExecContext(context.TODO(), q1, a.Title, a.Description, a.Content, a.ID)
 	if err != nil {
@@ -260,4 +260,19 @@ func EditArticle(a Post) (Post, error) {
 	post := nullPost.ToPost()
 
 	return post, nil
+}
+
+func DeleteArticle(id int) error {
+	q := `
+	UPDATE posts
+	SET is_deleted = true
+	WHERE id = ? AND is_deleted = false;
+	`
+
+	_, err := DB.Exec(q, id)
+	if err != nil {
+		return fmt.Errorf("DeleteArticle: %w", err)
+	}
+
+	return nil
 }

@@ -29,6 +29,7 @@ func main() {
 	r.HandleFunc("/users", c.HandleGetUsers).Methods("GET")
 	r.HandleFunc("/validate", c.HandleValidateUser).Methods("POST")
 	r.HandleFunc("/post/update", c.HandleEditArticle).Methods("PUT")
+	r.HandleFunc("/post/delete", c.HandleDeleteArticle).Methods("DELETE")
 
 	fmt.Printf("Listen on port %s...\n", c.Server.Addr)
 	err = c.Server.ListenAndServe()

@@ -8,6 +8,7 @@ import {TestFetch} from "./pages/TestPage";
 import {ArticlesPage} from "./pages/ArticlesPage";
 import {ArticlePage} from "./pages/ArticlePage";
 import {InvalidPage} from "./pages/InvalidPage";
+import UpdateArticlePage from "./pages/UpdateArticlePage";
 import {
     Route,
     createRoutesFromElements,
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/articles" isIn={isIn} element={<ArticlesPage/>}/>
                 <Route path="/articles/:id" element={<ArticlePage/>}/>
                 <Route path="*" element={<InvalidPage/>}/>
+                <Route path="/edit/:id" element={<UpdateArticlePage/>}/>
             </Route>
         ));
 

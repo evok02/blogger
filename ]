@@ -1,0 +1,22 @@
+const UpdateArticleForm = () => {
+    return (
+    <div className="bg-zinc-900 h-screen pt-10 flex justify-center">
+            <div className="absolute container grid grid-cols-1 p-20 bg-zinc-800 max-h-xl max-w-3xl">
+                <div className="mx-20 text-zinc-200">
+                    <input 
+                    type="text" 
+                    id="title"
+                    name="title" 
+                    required
+                    value="Title"
+                    placeholder="Title"
+                    className="border border-zinc-200 w-xl h-xl"
+                    />
+
+                </div>
+            </div>
+    </div>
+    );
+}
+
+export default UpdateArticleForm;

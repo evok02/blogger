@@ -204,3 +204,14 @@ func (c *apiConfig) HandleEditArticle(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(updatedPost)
 }
+
+func (c *apiConfig) HandleDeleteArticle(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+
+	intId, err := strconv.Atoi(id)
+	if err != nil {
+		writeError(fmt.Errorf("invalid id"), w)
+	}
+
+	err = storage.DeleteArticle(intId)
+}
